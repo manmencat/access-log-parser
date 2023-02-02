@@ -1,5 +1,7 @@
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 enum HTTPRequestMethod {
     Unknown,
@@ -27,7 +29,8 @@ public class LogEntry {
 
         startIndex = string.indexOf('[') + 1;
         endIndex = string.indexOf(']');
-        date = LocalDateTime.parse(string.substring(startIndex, endIndex), DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss Z"));
+        var formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss Z", Locale.ENGLISH);
+        date = ZonedDateTime.parse(string.substring(startIndex, endIndex), formatter).toLocalDateTime();
         System.out.println("date: " + date);
 
         startIndex = string.indexOf('"');
